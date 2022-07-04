@@ -1,10 +1,11 @@
  {% extends "base.html"  %}
 {% block content %}
 <h1>Member Information Dashboard</h1>
+
  <title>{% block title %}Add Member{% endblock %}</title>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAssa3bBFe5yylZECJYdLLiZ0H9i33x3QM"></script> 
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <script src={{gmap_script}}></script> 
   <script>
       /* Create address autocomplete */
       var autocompleteOptions = {

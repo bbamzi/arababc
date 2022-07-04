@@ -18,7 +18,7 @@ sms = Sms()
 
 app = Flask(__name__)
 
-run = 'deploy'
+run = 'dev'
 debug = ''
 
 if run == 'dev':
@@ -447,8 +447,10 @@ def logout():
 @login_required
 def member_list():
     fam = familes.Families()
+    
     if request.method == 'POST':
         file = request.files.get('profile_picture')
+        
         hashed_pw = generate_password_hash(request.form['password'], "sha256")
         new_member = Members(
             first_name=request.form['first_name'].title(),
@@ -520,14 +522,15 @@ def member_list():
         flash('Member Successfully Added')
         return redirect(url_for('member_list'))
 
-    return render_template('member/member_list.html', state_list=states,
+    return render_template('member/member_list.html', state_list=states,gmap_script = gmap_script,
                            gender_list=gender, society_list=society, departments_list=departments,
                            member=Members.query.all())
 
 
 @app.route('/new_member', methods=["GET", "POST"])
 def new_member():
-    return render_template('member/add_members.html', state_list=states, gender_list=gender, society_list=society,
+    gmap_script = os.environ.get('gmap_script')
+    return render_template('member/add_members.html', state_list=states, gender_list=gender, society_list=society,gmap_script=gmap_script,
                            departments_list=departments)
 
 
