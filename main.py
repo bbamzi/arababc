@@ -18,7 +18,7 @@ sms = Sms()
 
 app = Flask(__name__)
 
-run = 'dev'
+run = 'deploy'
 debug = ''
 
 if run == 'dev':
