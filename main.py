@@ -25,7 +25,7 @@ if run == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:icui4cu4u@localhost/arababc'
     debug = True
 elif run == 'deploy':
-    app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get('DATABASE_URL')
     debug = False
 
 app.config['SECRET KEY'] = os.environ.get('SECRET_KEY')
