@@ -335,8 +335,12 @@ def sms_index():
         chosen_group = num.number_getter(request.form['select'])
         len_of_number = 0
         for i in chosen_group:
-            numbers_generated += i + ','
-            len_of_number += 1
+            try:
+                print(i)
+                numbers_generated += i + ','
+                len_of_number += 1
+            except TypeError:
+                pass
 
         return render_template('Bulk_sms/sms_index.html', sms_balance=sms.balance_getter(),
                                len_of_numbers=len_of_number,
