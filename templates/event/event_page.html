@@ -1,0 +1,120 @@
+  <!-- Favicons -->
+  {% extends "base.html"  %}
+  {% block content %}
+  <title>{% block title %}{{ events.title }}{% endblock %}</title>
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <!-- <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> -->
+
+  <!-- Template Main CSS File -->
+
+        {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+        {% for message in messages %}
+      </div>
+
+      <div class="alert alert-success alert-dismissable" role="alert">
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+          <span aria-hidden="true">x</span>
+
+        </button>
+
+
+        {{message}}
+
+
+      </div>
+
+
+      {% endfor %}
+
+      {% endif %}
+      {% endwith %}
+
+
+<div class="event_page">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex  align-items-center" >
+
+    <div class="container d-flex flex-column align-items-center" >
+
+      <h1>{{events.Title}}</h1>
+      <br>
+      <div class="container d-flex flex-column align-items-center">
+
+        <p>{{events.Description}}</p>
+        <br>
+      </div>
+
+
+      <div class="countdown d-flex justify-content-center" data-count={{events.Date}}>
+
+
+<br>
+    <h3>Starts in : </h3>
+        <div>
+
+
+          <h3>%d</h3>
+          <h4>Days</h4>
+        </div>
+        <div>
+          <h3>%h</h3>
+          <h4>Hours</h4>
+        </div>
+        <div>
+          <h3>%m</h3>
+          <h4>Minutes</h4>
+        </div>
+        <div>
+          <h3>%s</h3>
+          <h4>Seconds</h4>
+        </div>
+      </div>
+<!-- <h4>Submit your mail to get a reminder 24hrs Prior to the Start Date</h4>
+      <div class="subscribe">
+
+        <form action="forms/notify.php" method="post" role="form" class="php-email-form">
+          <div class="subscribe-form">
+            <input type="email" name="email" required><input type="submit" value="Remind Me">
+          </div>
+
+        </form> -->
+      </div>
+
+
+
+    </div>
+  </header><!-- End #header -->
+
+
+
+
+
+  <!-- <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> -->
+
+  <!-- Vendor JS Files -->
+
+
+</div>
+<!--  {{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}-->
+<!--<script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
+<!--<script src=" {{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>-->
+
+<!-- Template Main JS File -->
+<script src="assets/js/event_page.js"></script>
+<script src="{{ url_for('static', filename='js/event_page.js') }}"></script>
+
+
+
+{% endblock %}

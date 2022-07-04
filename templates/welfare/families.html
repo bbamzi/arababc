@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% block content %}
+<title>{% block title %}Datatable{% endblock %}</title>
+<!-- navbar -->
+{% with messages = get_flashed_messages() %} {% if messages %}
+<ul>
+  {% for message in messages %}
+
+  <div
+    class="alert alert-success alert-dismissible fade show col-md-6"
+    role="alert"
+  >
+    <li>{{ message }}</li>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+</ul>
+{% endif %} {% endwith %}
+<!-- Table Section  -->
+
+  <div>
+    <div>
+      <h1>
+        Family list
+      </h1> 
+      <hr>
+      <h2>
+        How to Navigate🧑🏽‍🦯
+      </h2>
+        <ul><h3><li> To Schedule a Visitation , Click on the Respective Family Name , This link will navigate you to a new Page.</li></h3></ul>
+        <ul style="margin-left: 20px;">
+          <li><em><p>In this new page, you'll find a button tagged <span style="color: red;">Schedule Visitation.</span>
+        Click on it and select intended date of visitation ,<br>
+         then submit.
+        </p></em></li>
+        <li><em><p>The system will register the event schedule in the database and it will appear as an upcoming event in the calender section of the home page 
+          </p></em></li>
+          <li><em><p>Also, the VISITATION Status Column below will be Updated from <span style="color: red;">never visited</span> to <span style="color: green;">Visitation Scheduled for {Date Selected}</span>
+      </ul>
+      <ul><h3><li> The Search pane below can be use to query at least two conditions concurrently</li></h3></ul>
+      <ul style="margin-left: 20px;"><li><em><p> Take for example , You need to Query Family Members who live in Ilasamaja and have never been visited.</p></em></li> </ul>
+      <ul style="margin-left: 20px;"><li><em><p>All you have to do is search for both key words (i.e <i class="e">"ilasamaja" and "never visited"</i>) 🤗</p></em></li> </ul>
+      
+
+      
+    </div>
+
+  <!-- <section id=table_section> -->
+  <div class="table-responsive mt-4 card-body">
+    <!-- mt-4 card card-body cont -->
+    <table
+      id="member_table"
+      class="table table-sm .table-bordered "
+     
+    >
+    <thead class = "thead-dark ">
+        <tr>
+          <th>Family Name</th>
+
+          <th class="bg-dark">Phone</th>
+          <th class="bg-dark">Address</th>
+          <th class="bg-dark">Neighbourhood</th>
+          <th class="bg-dark">Lga</th>
+          <th class="bg-dark">Description</th>
+          <th class="bg-dark">Visitation Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in members %}
+        <tr class="table-primary" scope="row">
+          <td style="word-wrap: break-word">
+            <a href="{{ url_for('family_page',id=member[0].id )}}"
+              ><p>{{member[0].family_name}}</p></a
+            >
+          </td>
+          <td style="word-wrap: break-word">
+            <p>{{member[0].phone_number}}</p>
+          </td>
+          <td style="word-wrap: break-word">
+            <p>{{member[0].residential_address}}</p>
+          </td>
+          <td style="word-wrap: break-word">
+            <p>{{member[0].Neigborhood}}</p>
+          </td>
+          <td style="word-wrap: break-word"><p>{{member[0].lga}}</p></td>
+          <td style="word-wrap: break-word"><p>{{member[1].description}}</p></td>
+          {% if member[1].visitation_status %}
+          <td
+            style="word-wrap: break-word background-color: lightgrey; color: green"
+          >
+            <p>Visitation Scheduled for {{ member[1].scheduled_visitation }}</p>
+          </td>
+          {% elif member[1].visitation_status == False %}
+          <td
+            style="word-wrap: break-word background-color: lightgrey; color: blue"
+          >
+            <p>Family Last Visited on {{member[1].day_visited}}</p>
+          </td>
+          {% else %}
+          <td
+            style="word-wrap: break-word background-color: lightgrey; color: red"
+          >
+            <p>Never Visited</p>
+          </td>
+
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- </section> -->
+  <script type="text/javascript">
+    $(document).ready(function () {
+      window.setTimeout(function () {
+        $(".alert")
+          .fadeTo(500, 0)
+          .slideUp(500, function () {
+            $(this).remove();
+          });
+      }, 1000);
+    });
+    $("#member_table").DataTable({});
+  </script>
+
+  {% endblock %}
+</div>

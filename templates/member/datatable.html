@@ -1,0 +1,96 @@
+{% extends "base.html"  %}
+{% block content %}
+<title>{% block title %}Datatable{% endblock %}</title>
+<!-- navbar -->
+<div class="text-intro">
+  <h1>Note:</h1>
+
+  <h5>The table below is a filter enabled table:</h5>
+  <ol>
+    <li>
+      <h5>To filter items , simply use the search bar</h5>
+    </li>
+    <ul>
+      <li>
+        <p>For example: searching keywords like Amiable will retrun all
+          members in Amiable society likewise everyother society. </p>
+      </li>
+      <li>
+        <p>You can also filter based on multiple queries by including a space after your first query</p>
+        <p>Take for example, typing "Non-Society Adults" will render a table with only adults who don't belong to a society </p>
+        <p>Typing "female march" will return female members whose birthday falls in march</p>
+      </li>
+
+    </ul>
+    <li><h5>Buttons</h5></li>
+    <ul>
+      <li><p> The Copy button will copy the table below according to your filter</p></li>
+      <li><p>The CSV button downloads a csv version of the filtered table
+        (<span><strong><em>csvs can be opened with Excel</em></strong></span>)</p></li>
+      <li><p>Excel button does the same functions as the CSV,if no filterng was entered , the whole data will be downloaded</p></li>
+      <li>The Print button will print the table according to your filtering , if no filterng was entered , the whole data will be downloaded</li>
+      <li>Just like the aforementioned three , the pdf button also downloads based on filtering </li>
+    </ul>
+
+
+  </ol>
+</div>
+<!-- Table Section  -->
+<div class="">
+    <a href="{{url_for('new_member')}}"><button type="button" class="btn btn-dark btn-lg"> Add New Member</button></a>
+
+  </div>
+<!-- <section id=table_section> -->
+  <div class="table-responsive mt-4 card-body">
+    <!-- mt-4 card card-body cont -->
+    <table id="member_table" class=" table responsive table-secondary  table-bordered table-hover dataTable-table" style="width: 100%">
+
+      <thead>
+        <tr class="table-dark">
+          {% for item in columns %}
+          <th> {{ item }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for member in member %}
+        <tr class="table-active dataTable-table table-success">
+
+            <td style="word-wrap: break-word"><a href="{{ url_for('member_page',id=member.id )}}"><p>{{ member.id}}</p></a></td>
+
+          <td style="word-wrap: break-word"><a href="{{ url_for('member_page',id=member.id )}}"><p>{{ member.first_name | title + " " +member.middle_name | title + " " + member.surname | title}}</p></a></td>
+<!--          <td style="word-wrap: break-word"> <p>{{ member.gender | title }}</p></td>-->
+          <td style="word-wrap: break-word"> <p>{{ member.phone_number }}</p></td>
+<!--          <td style="word-wrap: break-word"> <p>{{ member.email }}</p></td>-->
+<!--          <td style="word-wrap: break-word"> <p>{{ member.date_of_birth }}</p></td>-->
+          <td style="word-wrap: break-word"> <p>{{ member.date_of_birth|date_month }}</p></td>
+          <td style="word-wrap: break-word"> <p>{{ member.date_of_birth|date_day }}</p></td>
+          <td style="word-wrap: break-word"> <p>{{ member.society | title }}</p></td>
+          <td style="word-wrap: break-word"> <p>{{ member.date_of_birth|age_group }}</p></td>
+<!--            <td style="word-wrap: break-word"> <p>{{ member.date_of_birth|date_week }}</p></td>-->
+<!--          <td style="word-wrap: break-word"> <p>{{ member.marital_status | title }}</p></td>-->
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+
+  </div>
+
+
+<!-- </section> -->
+<script type="text/javascript">
+  $('#member_table').DataTable({
+    dom: 'Blfrtip',
+    buttons: [
+      'copy', 'csv', 'excel', 'print', 'pdf', 'colvis'
+    ],
+
+
+  });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %} {% block content %}
+
+<title>
+  {% block title %}Schedule for {{ member.family_name }}{% endblock %}
+</title>
+
+<h1>
+  Schedule a Visitation For
+  <span style="color: darkolivegreen; font-weight: bold"
+    >{{ member.family_name }}</span
+  >
+</h1>
+<hr />
+<br />
+<br />
+<div class="container col-md-12">
+  <form
+    action="{{url_for('family_visitation_schedule',id= member.id)}}"
+    method="POST"
+  >
+    <div class="form-group col-md-8">
+      <br />
+      <label for="title">Visitation Date</label>
+      <input
+        type="text"
+        name="scheduled_visitation"
+        id="event_dates"
+        onchange="checkDate()"
+        class="form-control col-md-4"
+        placeholder="Visitation Date"
+        data-date-format="yyyy-mm-dd"
+      />
+    </div>
+    <div class="form-group col-md-8">
+      <label for="message" class="col-form-label">Condition</label>
+      <select
+        class="form-control -sm h-70 w-70"
+        name="condition"
+        aria-label="Select FIlter"
+        required
+      >
+        <option selected disabled value="">Choose...</option>
+          <option>Critical</option>
+        <option>Follow Up</option>
+        <option>Good</option>
+          <option>Normal</option>
+      </select>
+    </div>
+
+  <div class="form-group col-md-6 ">
+  <label class="date_labels">Visitation Date</label>
+  <input type="text" name="scheduled_visitation" id="start_date" class="form-control" placeholder="Start Date"  >
+  </div>
+<!--  <div class="form-group col-md-6 ">-->
+<!--  <label class="date_labels">End Date</label>-->
+<!--  <input type="text" name="end_date" id="end_date" class="form-control" placeholder="End Date" value="{{calendar.end_date}}" >-->
+<!--  </div>-->
+  <div class="form-group col-md-6 ">
+  <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</div>
+
+
+<script type="text/javascript">
+  $(document).click(function () {
+    $.datepicker.setDefaults({
+      dateFormat: "yy-mm-dd",
+    });
+  });
+  $(function () {
+    $("#event_date").datepicker({
+      changeMonth: true,
+      changeYear: true,
+      // yearRange: "2020:+nn"
+    });
+  });
+  $(function () {
+    $("#event_dates").datepicker({
+      changeMonth: true,
+      changeYear: true,
+      // yearRange: "2020:+nn"
+    });
+  });
+  function checkDate() {
+    var selectedText = document.getElementById("event_date").value;
+    var selectedDate = new Date(selectedText);
+    var now = new Date();
+    if (selectedDate < now) {
+      alert("Date must be today or in the future");
+    }
+  }
+  //  function checkDate() {
+  // var selectedText = document.getElementById('event_dates').value;
+  // var selectedDate = new Date(selectedText);
+  // var now = new Date();
+  // if (selectedDate < now) {
+  //  alert("Date must be today or in the future");
+  // }
+  // };
+</script>
+{% endblock %}

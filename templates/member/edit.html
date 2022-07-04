@@ -1,0 +1,306 @@
+{% extends "base.html"  %}
+{% block content %}
+<h1>Member Information Dashboard</h1>
+<title>{% block title %}Update {{ member_id.firstname }}{% endblock %}</title>
+
+<hr>
+<form class="form" action="{{url_for('edit',id= member_id.id)}}" method="POST" enctype="multipart/form-data">
+  <div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+      <div class="col-lg-3 border-right">
+        <br>
+
+        <div class="text-center profile_picture">
+          <br>
+          <h4 for="">Profile picture</h4>
+          <img src="{{ url_for('static', filename='img/uploads/'+member_id.profile_picture) }}" alt="{{member_id.first_name}}'s picture'" class="rounded-circle" width="200" >
+
+          <h6 class="upload">Upload a different photo...</h6>
+          <br>
+
+          <input id="file" type="file" name="profile_picture" class="form-control" value="{{member_id.profile_picture}}">
+
+
+        </div>
+<br>
+<span>Set Member as Admin?</span>
+<label for="chkYes">
+    <input type="radio" id="chkYes" name="chkPassPort" onclick="EnableDisableTextBox()" />
+    Yes
+</label>
+<label for="chkNo">
+    <input type="radio" id="chkNo" name="chkPassPort" onclick="EnableDisableTextBox()" />
+    No
+</label>
+<hr />
+
+
+<!--          <div class="col-md-12 "><label class="labels">Username</label><input type="text" class="form-control username"  id="username" disabled="disabled"  name="user_name" value="{{member_id.user_name | title}}"></div>-->
+
+<!--          <div class="col-md-12 "><label class="labels">Password</label><input type="password" class="form-control username"  id="password" disabled="disabled"  name="password" value="{{member_id.password_hash | title}}"></div>-->
+
+      </div>
+
+
+      <div class="col-md-5 border-right">
+        <div class="p-3 py-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Member Form</h4>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="first name" name="first_name" value="{{member_id.first_name | title}}"></div>
+            <div class="col-md-6"><label class="labels">Middle Name</label><input type="text" class="form-control" placeholder="middle name" name="middle_name" value="{{member_id.middle_name | title}}"></div>
+            <div class="col-md-12"><label class="labels">Surname</label><input type="text" class="form-control" placeholder="surname" name="surname" value="{{member_id.surname | title}}"></div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12"><label class="labels">Maiden Name(if applicable)</label><input type="text" class="form-control"  placeholder="Maiden Name (Wives)" name="maiden_name" value="{{member_id.maiden_name | title}}"></div>
+          </div>
+          <div class="row mt-3">
+            <div class=" col-lg-6 select-pane "><label class="labels">Gender</label>
+              <select class="form-control -sm h-70 w-70 " name="gender" aria-label="Select FIlter" value="{{member_id.gender | title}}">
+                <option selected >{{member_id.gender}}</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+               <label class="date_labels">Date of Birth</label>
+               <input type="text" name="date_of_birth" id="dob" class="form-control" placeholder="Date of Birth" value="{{member_id.date_of_birth}}">
+             </div>
+           </div>
+           <div class="row mt-3">
+             <div class="col-lg-12"><label class="labels">Phone Number (e.g <em>+234812345678</em>)</label><input type="text" oninput="this.value = this.value.replace(/[^0-9.+]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" class="form-contro" placeholder="enter phone number" name="phone_number" value="{{member_id.phone_number}}"></div>
+
+             <div class="col-lg-12"><label class="labels">Additional Phone Number (e.g <em>+234812345678</em>)</label><input type="text" oninput="this.value = this.value.replace(/[^0-9.+]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" class="form-control" placeholder="enter phone number" name="second_phone_number" value="{{member_id.second_phone_number}}"></div>
+             <div class="col-lg-12"><label class="labels">Email ID</label><input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="{{member_id.email}}"></div>
+             <div class="col-lg-12"><label class="labels">Residential Address</label><input type="text" class="form-control" placeholder="enter address" name="residential_address" value="{{member_id.residential_address | title}}"></div>
+             <div class="col-md-12"><label class="labels">Permanent Home Address</label><input type="text" class="form-control" placeholder="enter adrress" name="permanent_address" value="{{member_id.permanent_address | title }}"></div>
+
+             <div class="col-lg-6 select-pane"><label class="labels">State of Origin</label>
+               <select class="form-control -sm h-70 w-70" name="state_of_origin" aria-label="Select FIlter" value="{{member_id.state_of_origin | title }}" required>
+                <option selected >{{member_id.state_of_origin | title}}</option>
+                 {% for item in state_list %}
+                 <option>{{ item }}</option>{% endfor %}
+               </select>
+             </div>
+             <div class="col-md-6"><label class="labels">Local Government of Origin</label>
+               <input type="text" class="form-control" placeholder="enter address" name="state_lga" value="{{member_id.state_lga | title}}">
+             </div>
+
+           </div>
+           <div class="row mt-2">
+             <div class="col-lg-12"><label class="labels">Occupation</label><input type="text" class="form-control" name="occupation" value="{{member_id.occupation | title }}"></div>
+           </div>
+           <div class="row mt-2">
+
+             <div class="col-md-6 select-pane "><label class="labels">Marital Status</label>
+               <select class="form-control -sm h-70 w-70 " name="marital_status" aria-label="Select FIlter"  value="{{member_id.marital_status | title }}" required>
+                <option selected >{{member_id.marital_status | title}}</option>
+                 <option>Married</option>
+                 <option>Single</option>
+                 <option>Widowed</option>
+               </select>
+
+             </div>
+             <div class="col-lg-12 ">
+               <label class="date_labels">Wedding Date (<em>If Married/widowed</em>)</label>
+               <input type="text" name="wedding_date" id="wedding_date" class="form-control" placeholder="From Date" value="{{member_id.wedding_date | title }}" >
+
+
+             </div>
+             <div class="col-md-6 select-pane "><label class="labels">Have you been baptized?</label>
+               <select class="form-control -sm h-60 w-100 " name="baptism" aria-label="Select FIlter" value="{{member_id.baptism | title }}" required>
+                <option selected >{{member_id.baptism | title}}</option>
+                 <option>Yes</option>
+                 <option>No</option>
+               </select>
+             </div>
+             <div class="col-md-6 select-pane "><label class="labels">society</label>
+               <select class="form-control -sm h-60 w-100 " name="society" aria-label="Select FIlter"  required>
+                 <option selected >{{member_id.society | title }}</option>
+                   {% for item in society_list %}
+
+                 <option>{{ item }}</option>
+                 {% endfor %}
+               </select>
+             </div>
+           </div>
+
+
+
+        </div>
+      </div>
+      <div class="col-md-4 add_position">
+        <div class="p-3 py-5 input-wrapper">
+
+          <div class="d-flex justify-content-between align-items-center "><span>Previous Positions Held</span>
+            <span class="border px-3 p-1 add-experience"><a href="javascript:void(0);" class="col-lg-12 add-input" title="Add input"><button type="button" name="position_button" value="add_position" action="add_position">Click to Add more
+                  Positions</button></a>
+            </span>
+
+          </div>
+            {% for position in position %}
+          <br>
+
+          <div class="col-md-12">
+            <label class="labels">Department</label>
+            <input name="department" type="text" class="form-control" placeholder="Department" value="{{position.department | title}}">
+          </div>
+
+          <div class="col-md-12"><label class="labels">Position Held in Department</label>
+            <input type="text" class="form-control" placeholder="enter Position" name="position" value="{{position.position | title }}"></div>
+          <div class="col-lg-12">
+            <label class="date_labels">Start Date</label>
+            <input type="text" name="start_date" id="From" class="form-control" placeholder="From Date" value="{{position.start_date}}" >
+          </div>
+          <div class="col-lg-12">
+            <label class="date_labels">End Date</label>
+            <input type="text" name="end_date" id="to" class="form-control" placeholder="End Date" value="{{position.end_date}}" >
+
+          </div>
+
+            <hr>
+
+
+            {% endfor %}
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <div class="mt-5 text-center">
+     <input id="btn" class="btn btn-primary profile-button" type="submit" value="Save Profile">
+   </div>
+</form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.5/css/intlTelInput.css" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.5/js/intlTelInput.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.5/js/utils.js"></script>
+  <script>
+    var id_index = 2; //Id for from and to
+
+    $(document).ready(function() {
+
+        var max_input_fields = 10;
+        var add_input = $('.add-input');
+        var input_wrapper = $('.input-wrapper');
+
+        var add_input_count = 1;
+
+        $(add_input).click(function() {
+            if (add_input_count < max_input_fields) {
+
+                //Moved so that the from and two id can change
+
+  var new_input = '<div class="col-lg-12">\
+    <br>\
+    <div class="col-md-12  ">\
+  <label class="labels">Department</label>\
+  <input type="text" name="department" id="From" class="form-control" placeholder="Department" />\
+  </div>\
+  <div class="col-md-12"><label class="labels">Position Held</label>\
+  <input type="text" class="form-control" placeholder="enter Position" name="position" >\
+  </div>\
+  <div class="col-lg-12">\
+    <label class="date_labels" >Start Date</label>\
+  <input type="text"  name="start_date" id="From' + id_index + '" class="form-control" placeholder="start_date" />\
+  </div>\
+  <div class="col-lg-12">\
+    <label class="date_labels">End Date</label>\
+    <input type="text" name="end_date" id="to' + id_index + '" class="form-control" placeholder="End Date" />\
+  </div>\
+  <a href="javascript:void(0);" class="col-lg-12 remove-input" title="Remove input">\
+    <button type="button" name="position_button">Remove</button></a></div>';
+
+
+
+
+                add_input_count++;
+
+                $(input_wrapper).append(new_input);
+
+                $("#From" + id_index).datepicker(); //Apply datetime
+                $("#to" + id_index).datepicker();
+
+                id_index++; //Increment id
+            }
+        });
+
+        $(input_wrapper).on('click', '.remove-input', function(e) {
+            e.preventDefault();
+            $(this).parent('div').remove();
+            add_input_count--;
+        });
+
+        //Removed $(document).ready as its redundant
+
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd'
+        });
+
+        // $("#From").datepicker();
+        // $("#to").datepicker();
+
+    });
+  $(document).click(function() {
+      $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd'
+      });
+    });
+    $( function() {
+      $( "#dob" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1950:+nn"
+      });
+    } );
+    $( function() {
+      $( "#From" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1950:+nn",
+
+      });
+    } );
+    $( function() {
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1950:+nn",
+
+      });
+    } );
+    $( function() {
+      $( "#wedding_date" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1950:+nn",
+
+      });
+    } );
+        function EnableDisableTextBox() {
+        var chkYes = document.getElementById("chkYes");
+        var usernames = document.getElementById("username");
+        var passwords = document.getElementById("password");
+        usernames.disabled = chkYes.checked ? false : true;
+        passwords.disabled = chkYes.checked ? false : true;
+        if (!usernames.disabled) {
+            usernames.focus();
+        }
+        if (!passwords.disabled) {
+            passwords.focus();
+        }
+    }
+
+
+
+
+
+
+  </script>
+
+
+{% endblock %}

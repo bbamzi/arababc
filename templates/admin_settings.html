@@ -1,0 +1,55 @@
+{% extends "base.html"  %}
+{% block content %}
+<title>{% block title %}Change Settings{% endblock %}</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-4">
+            {% with messages = get_flashed_messages() %}
+                                         {% if messages %}
+
+                                       {% for message in messages %}
+                                            <div class="alert alert-danger  " role="alert">
+                                    {{ message }}
+
+                                    </div>
+
+                                       {% endfor %}
+                                 {% endif %}
+                              {% endwith %}
+            <form class="form" action="{{url_for('admin_settings')}}" method="POST">
+		    <label>Current Password</label>
+		    <div class="form-group pass_show">
+                <input type="password" value="" name="current_password" class="form-control" placeholder="Current Password">
+            </div>
+		       <label>New Password</label>
+            <div class="form-group pass_show">
+                <input type="password"  name="new_password" class="form-control" placeholder="New Password">
+            </div>
+		       <label>Confirm Password</label>
+            <div class="form-group pass_show">
+                <input type="password" name="retry_password" class="form-control" placeholder="Confirm Password">
+            </div>
+                <input class="btn btn-primary profile-button" type="submit" value="Change Password">
+                </form>
+
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+$('.pass_show').append('<span class="ptxt">Show</span>');
+});
+
+
+$(document).on('click','.pass_show .ptxt', function(){
+
+$(this).text($(this).text() == "Show" ? "Hide" : "Show");
+
+$(this).prev().attr('type', function(index, attr){return attr == 'password' ? 'text' : 'password'; });
+
+});
+</script>
+{% endblock %}

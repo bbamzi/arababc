@@ -1,0 +1,154 @@
+:root {
+  --color-brand--1: #ffb545;
+  --color-brand--2: #00c46a;
+
+  --color-dark--1: #2d3439;
+  --color-dark--2: #42484d;
+  --color-light--1: #aaa;
+  --color-light--2: #ececec;
+  --color-light--3: rgb(214, 222, 224);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  color: var(--color-light--2);
+  font-weight: 400;
+  line-height: 1.6;
+  height: 100vh;
+  overscroll-behavior-y: none;
+
+  background-color: #fff;
+  padding: 2.5rem;
+
+  display: flex;
+}
+
+/* GENERAL */
+a:link,
+a:visited {
+  color: var(--color-brand--1);
+}
+
+/* SIDEBAR */
+.sidebar {
+  flex-basis: auto;
+  background-color: var(--color-dark--1);
+  padding: 3rem 5rem 4rem 5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  flex: 0 0 50%;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.form__input:focus {
+  outline: none;
+  background-color: #fff;
+}
+
+.form__btn {
+  display: block;
+}
+
+.visitation--form {
+  opacity: 0;
+}
+
+.showForm {
+  opacity: 1;
+  transition: opacity 0.6s linear 0.2s;
+}
+
+/* MAP */
+#map {
+  flex: 1;
+  height: 100%;
+  background-color: var(--color-light--1);
+}
+
+/* Popup width is defined in JS using options */
+.leaflet-popup .leaflet-popup-content-wrapper {
+  background-color: var(--color-dark--1);
+  color: var(--color-light--2);
+  border-radius: 5px;
+  padding-right: 0.6rem;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  font-size: 1.5rem;
+}
+
+.leaflet-popup .leaflet-popup-tip {
+  background-color: var(--color-dark--1);
+}
+
+.running-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--2);
+}
+.cycling-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--1);
+}
+
+#button1 {
+  width: 120px;
+  height: 35px;
+  background-color: var(--color-dark--1);
+  color: white;
+  border: 2px solid #FF0000.; /* Green */
+}
+#button2 {
+  width: 70px;
+  height: 30px;
+  background-color: var(--color-dark--1);
+  color: white;
+  border: 2px solid #FF0000.; /* Green */
+}
+
+.schedule {
+  width: 232px;
+  height: 57px;
+  padding-top: 2px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+  padding-right: 2px;
+  background-color: #39454d;
+  border: 2px solid #42484d;
+  color: rgb(255, 255, 255);
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.schedule:hover {
+  background-color: rgb(34, 44, 34);
+}
+#container {
+  text-align: center;
+}
+
+.alert {
+  padding: 20px;
+  background-color: rgb(34, 44, 34);
+  color: green;
+  width: 200px;
+  height: 30px;
+  font-size: 15px;
+}
+
+.closebtn:hover {
+  color: black;
+}

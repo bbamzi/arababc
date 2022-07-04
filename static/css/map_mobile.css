@@ -1,0 +1,16 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+
+.sidebar {
+  flex-basis: auto;
+  background-color: var(--color-dark--1);
+  padding: 3rem 5rem 4rem 5rem;
+  display: flex;
+  flex-direction: column;
+}

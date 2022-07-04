@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename= 'css/map_style.css') }}"
+    />
+
+    <!--    <link rel="stylesheet" href="map_style.css" />-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+
+    <script
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
+
+    <!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">-->
+    <!--  <link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <!-- <script defer src="other.js"></script> -->
+    <!--    <script src="{{ url_for('static',filename= 'js/map_script.js') }}"></script>-->
+
+    <title>{{ member.family_name }}</title>
+  </head>
+  <body>
+
+   
+      
+    <div class="sidebar ">
+
+      {% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+
+
+                <div class="alert alert-success alert-dismissible fade show col-md-6 " role="alert">
+               <li>{{ message }}</li>
+
+
+
+
+            </button>
+            </div>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+      <br>
+
+        <a href="{{url_for('home')}}"><button class="schedule" style=" height : 10px width: 100px;  ">
+        <i class="fa fa-home"> Return Home</i>
+      </button></a>
+
+
+      <br />
+      <div class="float-container">
+      <a href="{{ url_for('member_page',id=member.member_id )}}"
+        ><h1>{{ member.family_name }}</h1></a
+      >
+
+      <hr />
+      <br />
+      <h1>Contact :</h1>
+
+      <h2 style="margin-left: 30px">Email : {{ member.email }}</h2>
+
+      <h2 style="margin-left: 30px">
+        Phone Number : {{ member.phone_number }}
+      </h2>
+      <br />
+
+      <h1>Address :</h1>
+      <h2 style="margin-left: 30px">{{ member.residential_address }}</h2>
+      <br />
+
+      <h1>Google suggested address :</h1>
+      <h2 style="margin-left: 30px">
+        Address : {{ member.google_suggested_address }}
+      </h2>
+      <h2 style="margin-left: 30px">
+        Neighbourhood : {{ member.Neigborhood }}
+      </h2>
+      <h2 style="margin-left: 30px">Local Govt: {{ member.lga }}</h2>
+      <h2 style="margin-left: 30px">State: {{ member.state }}</h2>
+      <br />
+      <h1>Visitations:</h1>
+        {% if visitation.visitation_status %}
+              <h2 style="margin-left: 30px">
+                Scheduled Visitation: {{ visitation.scheduled_visitation }}
+              </h2>
+        <br>
+              <div class="visitation-tools">
+                    <a href="{{ url_for('family_visitation_edit',id=member.id )}}"><input type="button" value=" Write a Report"  style="width: 110px; margin-left: 10px"></a>
+                    <a href="{{ url_for('family_visitation_mark_complete',id=member.id )}}"><input type="button" value=" Mark as Visited"  style="width: 110px; margin-left: 10px" onclick="return confirm('Are You Sure To about this ?')"></a>
+                </div>
+      {% else %}
+      <h2 style="margin-left: 30px">
+        Scheduled Visitation: None
+      </h2>
+
+
+        {% if visitation_counts > 0 %}
+      <h2 style="margin-left: 30px">Number of Times Visited : {{ visitation_counts }}</h2>
+       <h2 style="margin-left: 30px">
+        Last Visitation: {{ visitation.day_visited }}
+      </h2>
+        <br>
+
+                    <a href="{{ url_for('family_visitation_edit',id=member.id )}}"><input type="button" value="Edit last Visitation"  style="width: 110px; margin-left: 10px"></a>
+
+        {% else %}
+      <h2 style="margin-left: 30px">Number of Times Visited : Never Visited</h2>
+      {% endif %}
+      <br>
+      <div class="visitation-tools">
+<!--      <a href="{{ url_for('delete',id=member.id )}}">-->
+<!--        <input class="delete&#45;&#45;schedule" type="button" value="Delete last Visit"  style="width: 120px; margin-left: 30px " onclick="return confirm('Are You Sure To Delete ?')">-->
+<!--      </a>-->
+        </div>
+      <br>
+
+      <button class="btn schedule">
+        <i class="fa fa-bus"> Schedule a Visitation</i>
+      </button>
+      {% endif %}
+
+      <br />
+      <form
+        class="visitation--form"
+        action="{{url_for('family_visitation_schedule', id= member.id)}}"
+        method="POST"
+      >
+        <div class="">
+          <label class="form__label" style="margin-right: 30px"
+            >Pick a Date:
+          </label>
+          <input
+            type="text"
+            name="scheduled_visitation"
+            id="event_dates"
+            onchange="checkDate()"
+            style="width: 150px; height: 30px"
+            placeholder="Pick a Date"
+            data-date-format="yyyy-mm-dd"
+
+          required/>
+        </div>
+        <br />
+        <!--      <button type="button home-button" id="button2" >Save</button>-->
+        <input
+          id="btn"
+          class="btn btn-primary profile-button"
+          type="submit"
+          value="Save Date"
+        />
+      </form>
+          </div>
+    </div>
+
+    <div id="map"></div>
+ 
+
+    <script>
+    $(document).ready(function () {
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 1000);
+
+});
+
+
+
+      const form = document.querySelector('.visitation--form')
+      const btn = document.querySelector('.btn')
+
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault()
+        form.classList.toggle('showForm')
+
+        form.style.display = "block";
+      })
+                  const position = {{member.coordinates}}
+                  var map = L.map("map").setView(position, 15);
+                  var marker = L.marker(position).addTo(map);
+                  marker
+                    .bindPopup(
+                      "<b>{{ member.family_name}}</b><br>{{member.residential_address}}"
+                    )
+                    .openPopup();
+
+                 mapLink =
+  '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+L.tileLayer(
+  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; ' + mapLink + ' Contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+                    $(document).click(function() {
+                  $.datepicker.setDefaults({
+                    dateFormat: 'yy-mm-dd'
+                  });
+                });
+
+                $( function() {
+                  $( "#event_dates" ).datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    // yearRange: "2020:+nn"
+                  });
+                } );
+                function checkDate() {
+               var selectedText = document.getElementById('event_dates').value;
+               var selectedDate = new Date(selectedText);
+               var now = new Date();
+               if (selectedDate < now) {
+                alert("Date must be today or in the future");
+                return  document.getElementById('event_dates').setAttribute('value', 'My value');
+
+
+               }
+             };
+    </script>
+  </body>
+</html>

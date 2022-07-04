@@ -1,0 +1,100 @@
+{% extends "base.html"  %}
+{% block content %}
+<title>{% block title %}Event Table{% endblock %}</title>
+
+        {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+        {% for message in messages %}
+      </div>
+
+      <div class="alert alert-success alert-dismissable" role="alert">
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+          <span aria-hidden="true">x</span>
+
+        </button>
+
+
+        {{message}}
+
+
+      </div>
+
+
+      {% endfor %}
+
+      {% endif %}
+      {% endwith %}
+
+<div class="table-responsive mt-4 card-body">
+
+  <table class="table table-sm .table-bordered " id="event_table">
+  <thead class = "thead-dark ">
+    <tr>
+      <th class="bg-dark">Title</th>
+      <th class="bg-dark">Description</th>
+      <th class="bg-dark">Start Date</th>
+      <th class="bg-dark">Due Date</th>
+      <th class="bg-dark">Actions</th>
+    </tr>
+  </thead>
+  <tbody >
+    {% for event in events %}
+    {% if event.calendar_id is not none %}
+    <tr>
+      <th class="table-primary" scope="row">{{ event.Title | title}}</th>
+      <td class="col-lg-3 table-primary">{{ event.Description }}</td>
+      <td class="col-lg-2 table-primary">{{ event.Date}}</td>
+      <td class="col-lg-2 table-primary">{{ event.due_date }}</td>
+      <td class="col-lg-4 table-primary"><a href="{{ url_for('update_event',id=event.calendar_id )}}"><button type="button" class="btn-sm btn-dark ">Update</button></a>
+
+        <a href="{{ url_for('delete_event',id=event.calendar_id )}}"><button type="button" class="btn-sm btn-danger" onclick="return confirm('Are You Sure To Delete ?')">Delete Event</button></a>
+      <a href="{{ url_for('event_page',id=event.id )}}"><button type="button" class="btn-sm btn-success ">View Event</button></a>
+        </td>
+    </tr>
+    {% endif %}
+
+     {% if event.visitation is not none %}
+    <tr>
+      <th class="table-primary" scope="row">{{ event.Title | title}}</th>
+      <td class="col-lg-3 table-primary">{{ event.Description }}</td>
+      <td class="col-lg-2 table-primary">{{ event.Date}}</td>
+
+      <td class="col-lg-2 table-primary">{{ event.due_date }}</td>
+      <td class="col-lg-4 table-primary">
+
+      <a href="{{ url_for('event_page',id=event.id )}}"><button type="button" class="btn-sm btn-success ">View Event</button></a>
+        </td>
+    </tr>
+      {% endif %}
+
+    {% endfor %}
+  </tbody>
+
+</table>
+
+
+
+
+</div>
+<script type="text/javascript">
+  $('#event_table').DataTable({
+  });
+$(document).ready(function () {
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 1500);
+
+});
+</script>
+
+
+<!-- </section> -->
+
+{% endblock %}

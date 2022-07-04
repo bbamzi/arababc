@@ -1,0 +1,147 @@
+{% extends "base.html" %} {% block content %}
+
+<title>{% block title %}update Visitation {% endblock %}</title>
+
+<h1>Report on Visitation for {{ member.family_name}}</h1>
+
+<hr />
+
+<div class="container col-md-12">
+  <form
+    action="{{url_for('family_visitation_edit', id = member.id)}}"
+    method="POST"
+  >
+    <div class="form-group col-md-8">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        value="{{visitation.title}}"
+      />
+    </div>
+    <div class="form-group col-md-8">
+      <label for="message" class="col-form-label">Description </label>
+      <textarea rows="1" class="form-control" name="description">
+{{visitation.description}}</textarea
+      >
+      <span style="color: green"
+        ><em
+          ><p>Please Change the above Statement to past participle</p></em
+        ></span
+      >
+    </div>
+
+    <div class="form-group col-md-3 day_visited">
+      <label class="date_labels">Planned Visitation Date</label>
+      <input
+        type="text"
+        name="scheduled_visitation"
+        id="scheduled_visitation"
+        class="form-control"
+        placeholder="scheduled visitation"
+        value="{{visitation.scheduled_visitation}}"
+        readonly
+      />
+      <input
+        type="button"
+        id="change_this"
+        value="change this"
+        style="
+          color: rgb(207, 205, 205);
+          background-color: rgb(42, 42, 35);
+          width: 110px;
+          margin-left: 10px;
+        "
+      />
+    </div>
+
+    <div class="form-group col-md-8">
+      <label class="col-form-label">Condition</label>
+      <select
+        class="form-control -sm h-70 w-70"
+        name="condition"
+        aria-label="Select FIlter"
+        value="{{visitation.condition}}"
+        required
+      >
+        <option selected>{{visitation.condition}}</option>
+        <option>Critical</option>
+        <option>Follow Up</option>
+        <option>Good</option>
+        <option>Normal</option>
+      </select>
+    </div>
+    <div class="form-group col-md-8">
+      <label class="col-form-label">Summary</label>
+      <textarea rows="5" class="form-control" name="summary">
+{{visitation.summary}}</textarea
+      >
+    </div>
+
+    <div class="form-group col-md-3">
+      <label class="date_labels">Day Visited</label>
+      <input
+        type="text"
+        name="day_visited"
+        id="start_dates"
+        class="form-control dob"
+        placeholder="Enter Date"
+        value="{{visitation.day_visited}}"
+      />
+    </div>
+
+    <div class="form-group col-md-8">
+      <label for="message" class="col-form-label">Visitation Status</label>
+      <select
+        required
+        class="form-control -sm h-70 w-70"
+        name="visitation_status"
+        aria-label="Select FIlter"
+      >
+        <option>{{visitation.visitation_status | change_to_true}}</option>
+
+        <option>Completed</option>
+        <option>Not Completed</option>
+      </select>
+    </div>
+    <br />
+    <div class="form-group col-md-6">
+      <button type="submit" class="btn btn-primary">Update</button>
+      <a href="{{ url_for('delete_visitations',id=visitation.id )}}"
+        ><button
+          type="button"
+          class="btn-sm btn-danger"
+          onclick="return confirm('Are You Sure To Delete ?')"
+        >
+          Delete This Event
+        </button></a
+      >
+    </div>
+  </form>
+</div>
+
+<script type="text/javascript">
+  const scheduled_visitation = document.querySelector("#scheduled_visitation");
+  const change_this = document.querySelector("#change_this");
+
+  change_this.addEventListener("click", (e) => {
+    $("#scheduled_visitation").prop("readonly", false);
+  });
+
+  $(document).click(function () {
+    $.datepicker.setDefaults({
+      dateFormat: "yy-mm-dd",
+    });
+  });
+  $(function () {
+    $(".dob").datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1950:+nn",
+    });
+  });
+</script>
+
+{% endblock %}

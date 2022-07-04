@@ -1,0 +1,81 @@
+{% extends "base.html"  %}
+{% block content %}
+<title>{% block title %}Calender{% endblock %}</title>
+
+<div class="">
+    <a href="{{url_for('add_event')}}"><button type="button" class="btn btn-dark btn-lg">Add Event</button></a>
+
+  </div>
+
+<div class="container my-3">
+          {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+        {% for message in messages %}
+      </div>
+
+      <div class="alert alert-success alert-dismissable" role="alert">
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+          <span aria-hidden="true">x</span>
+
+        </button>
+
+
+        {{message}}
+
+
+      </div>
+
+
+      {% endfor %}
+
+      {% endif %}
+      {% endwith %}
+  <div id="calendar"></div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      aspectRatio: 2.25,
+
+      events: [
+                        {% for keys in parent_list %}
+
+                     {
+                       title: '{{keys['Title']}}',
+                       start: '{{keys['Date']}}',
+                       end: '{{keys['due_date']}}',
+                       color : "{{event_color | list_picker }}"
+
+                     },
+
+                     {% endfor %}]
+,eventClick: function (info) {
+      info.jsEvent.preventDefault(); // don't let the browser navigate
+
+      if (info.event.url) {
+        window.open(info.event.url);
+      }
+    }
+    });
+  calendar.render();
+  });
+  $(document).ready(function () {
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 1500);
+
+});
+</script>
+
+
+
+{% endblock %}

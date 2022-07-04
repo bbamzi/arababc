@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename= 'css/map_style.css') }}"
+    />
+
+    <!--    <link rel="stylesheet" href="map_style.css" />-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+
+    <script
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <title>{{ family_name }}</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <a href="{{url_for('home')}}"
+        ><button class="schedule" style="height: 50px; width: 80px">
+          <i class="fa fa-home"> Home</i>
+        </button></a
+      >
+
+      <div class="float-container"></div>
+    </div>
+
+    <script>
+       var locations = {{ lister | tojson }}
+
+      var map = L.map("map").setView([6.5335654451029805, 3.322293213732204], 13);
+      mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+      L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; " + mapLink + " Contributors",
+        maxZoom: 18,
+      }).addTo(map);
+
+      for (var i = 0; i < locations.length; i++) {
+        marker = new L.marker([locations[i][1], locations[i][2]])
+          .bindPopup(locations[i][0])
+          .addTo(map);
+      }
+    </script>
+  </body>
+</html>

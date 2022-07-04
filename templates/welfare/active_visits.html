@@ -1,0 +1,87 @@
+{% extends "base.html"  %}
+{% block content %}
+<title>{% block title %}Event Table{% endblock %}</title>
+
+        {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+        {% for message in messages %}
+      </div>
+
+      <div class="alert alert-success alert-dismissable" role="alert">
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+          <span aria-hidden="true">x</span>
+
+        </button>
+
+
+        {{message}}
+
+
+      </div>
+
+
+      {% endfor %}
+
+      {% endif %}
+      {% endwith %}
+
+<div class="table-responsive mt-4 card-body">
+
+  <table class="table table-sm .table-bordered " id="event_table">
+  <thead class = "thead-dark ">
+    <tr>
+        <th class="bg-dark">Family</th>
+      <th class="bg-dark">Scheduled Date</th>
+      <th class="bg-dark">Description</th>
+        <th class="bg-dark">Due in </th>
+      <th class="bg-dark">Actions</th>
+    </tr>
+  </thead>
+  <tbody >
+    {% for fam in family %}
+    <tr>
+
+      <th class="table-primary" scope="row">{{ fam[0].family_name | title}}</th>
+      <td class="col-lg-3 table-primary">{{ fam[1].scheduled_visitation }}</td>
+      <td class="col-lg-2 table-primary">{{ fam[1].description}}</td>
+
+      <td class="col-lg-2 table-primary">{{ fam[1].scheduled_visitation - today   }}</td>
+
+      <td class="col-lg-4 table-primary"><a href="{{url_for('family_visitation_edit', id = fam[1].family_id)}}"><button type="button" class="btn-sm btn-dark ">Create Report</button></a>
+
+        <a href="{{ url_for('family_page',id=fam[0].id )}}"><button type="button" class="btn-sm btn-danger" >View Page</button></a>
+
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+</div>
+
+
+<script type="text/javascript">
+  $('#event_table').DataTable({
+  });
+$(document).ready(function () {
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 1500);
+
+});
+</script>
+
+
+<!-- </section> -->
+
+{% endblock %}

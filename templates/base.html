@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+
+  <meta name="author" content="" />
+<!--    <link rel="shortcut icon" href="{{ url_for('static', filename='img/Logo!.png') }}"/>-->
+  <title>{% block title %}{% endblock %}</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <!-- Homepage Things  -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <!-- iCheck -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <!-- JQVMap -->
+  <!-- <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css"> -->
+  <!-- Theme style -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
+  <!-- overlayScrollbars -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <!-- Daterange picker -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="  {{ url_for('static', filename='plugins/summernote/summernote-bs4.min.css') }}">
+
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/eb0ee0442b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css"></link>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+  <!-- jquery -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- datatble -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.11.0/b-2.0.0/b-html5-2.0.0/r-2.2.9/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.11.0/b-2.0.0/b-html5-2.0.0/r-2.2.9/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
+    <!-- Bootstrap -->
+   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+       integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+       <script src="https://kit.fontawesome.com/16fda319fc.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+
+
+
+</head>
+
+<body class="sb-nav-fixed">
+  <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <a class="navbar-brand ps-3" href="{{url_for('home')}}">Araba Baptist Church </a>
+    <!-- Sidebar Toggle-->
+
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+      <div class="input-group">
+        <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
+      </div>
+<!--<i class="fas fa-user fa-fw">-->
+    </form>
+    <!-- Navbar-->
+    {% if current_user.is_authenticated %}
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+      <li class="nav-item dropdown">
+
+                    {% set profile_pics = current_user.profile_picture %}
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ url_for('static', filename='img/uploads/'+profile_pics) }}" style="width:15px;"></i></a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="{{url_for('admin_settings')}}">Change Password</a></li>
+          <li><a class="dropdown-item" href="{{url_for('set_admin')}}">Set Admin</a></li>
+          <!-- <li><a class="dropdown-item" href="#!">Activity Log</a></li> -->
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a class="dropdown-item" href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+    {% endif %}
+  </nav>
+
+  <div id="layoutSidenav">
+
+    <div id="layoutSidenav_nav">
+{% if current_user.is_authenticated %}
+      <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+
+        <div class="sb-sidenav-menu">
+          <div class="nav">
+            <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+            <a class="nav-link" href="{{url_for('home')}}">
+              <!-- add home here --><br>
+              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+
+              Dashboard
+            </a>
+
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+              Pages
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+
+
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+              <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                  Manage Members
+                  <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                  <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{{url_for('new_member')}}">Add Member</a>
+                    <a class="nav-link" href="{{url_for('member_list')}}">View Members</a>
+                    <!-- <a class="nav-link" href="password.html">Forgot Password</a> -->
+                  </nav>
+                </div>
+
+                <a class="nav-link" href="{{url_for('messaging')}}" aria-controls="pagesCollapseError">
+                  Text Messages
+
+                </a>
+              </nav>
+
+            </div>
+
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#calendar_view" aria-expanded="false" aria-controls="collapsePages">
+            <div class="sb-nav-link-icon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+            Calender
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+
+          <div class="collapse" id="calendar_view" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+
+              <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+
+              </div>
+
+              <a class="nav-link" href="{{url_for('calendar')}}" aria-controls="pagesCollapseError">
+                View Calendar
+
+              </a>
+              <a class="nav-link" href="{{url_for('event_table')}}" aria-controls="pagesCollapseError">
+                Manage Events
+
+              </a>
+
+            </nav>
+            </div>
+
+
+<!--              ########################################### welafare #######################################################-->
+                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#welfare_view" aria-expanded="false" aria-controls="collapsePages">
+            <div class="sb-nav-link-icon"><i class="fa fa-home" aria-hidden="true"></i></div>
+            Welfare Dept
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+
+          <div class="collapse" id="welfare_view" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+
+              <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+
+              </div>
+
+              <a class="nav-link" href="{{url_for('families')}}" aria-controls="pagesCollapseError">
+                View Families
+
+              </a>
+<!--              <a class="nav-link" href="#" aria-controls="pagesCollapseError">-->
+<!--                Schedule Visit-->
+
+<!--              </a>-->
+                <a class="nav-link" href="{{url_for('active_visitations')}}" aria-controls="pagesCollapseError">
+                Manage Visits
+
+              </a>
+<!--                 <a class="nav-link" href="#" aria-controls="pagesCollapseError">-->
+<!--                Map-->
+
+<!--              </a>-->
+
+            </nav>
+            </div>
+
+            <div class="sb-sidenav-menu-heading">Addons</div>
+
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#tables" aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+              Datatables
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="tables" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+              <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+
+                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+
+                </div>
+
+                <a class="nav-link" href="{{url_for('datapage')}}" aria-controls="pagesCollapseError">
+                  View Members
+
+                </a>
+                <a class="nav-link" href="{{url_for('member_list')}}" aria-controls="pagesCollapseError">
+                  Edit or Delete
+
+                </a>
+                <a class="nav-link" href="{{url_for('families')}}" aria-controls="pagesCollapseError">
+                  Families Table
+
+                </a>
+
+              </nav>
+            </div>
+
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#chart" aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+              Charts
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="chart" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+              <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+
+                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+
+                </div>
+
+
+                <a class="nav-link" href="#" aria-controls="pagesCollapseError">
+                  Analytics
+                </a>
+
+              </nav>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="sb-sidenav-footer">
+ {% if current_user.is_authenticated %}
+          <div class="small">Logged in as:</div>
+          {{ current_user.first_name | title +  " " + current_user.surname| title }}
+          {% endif %}
+        </div>
+
+      </nav>
+         {% endif %}
+
+
+    </div>
+
+    <div id="layoutSidenav_content" style="background-image: url('../static/cross.jpg');">
+
+
+
+      <main class="main_page">
+
+        <div class="container-fluid px-4 ">
+          <br>
+          {%block content%}
+          {%endblock%}
+      </main>
+      <footer class="py-4   footer mt-auto bg-gradient-light">
+        <div class="container-fluid px-4 ">
+          <div class="d-flex align-items-center justify-content-between small">
+            <div class="text -muted">Copyright &copy; Araba Baptist Church {{0 | this_year }}</div>
+
+            <div>
+<!-- {% if current_user.is_authenticated %}-->
+              <a href="https://arababc.herokuapp.com/member/1038/member_page">Created with ❤️ from Agege</a>
+              <!-- <a href="#">Terms &amp; Conditions</a> -->
+<!--       {% endif %}-->
+
+            </div>
+
+          </div>
+        </div>
+
+      </footer>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.validate.min.js"></script>
+  <script src="js/main.js"></script> -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+</body>
+
+</html>
