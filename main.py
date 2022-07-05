@@ -18,7 +18,7 @@ from family import familes
 
 app = Flask(__name__)
 
-run = 'dev'
+run = 'deploy'
 debug = ''
 
 if run == 'dev':
