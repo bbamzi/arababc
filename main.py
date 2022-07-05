@@ -18,10 +18,10 @@ from family import familes
 
 app = Flask(__name__)
 
-run = 'dev'
+run = 'deploy'
 debug = ''
 
-if run == 'deploy':
+if run == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:icui4cu4u@localhost/arababc'
     debug = True
 elif run == 'deploy':
