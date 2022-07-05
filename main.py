@@ -21,7 +21,7 @@ app = Flask(__name__)
 run = 'dev'
 debug = ''
 
-if run == 'dev':
+if run == 'deploy':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:icui4cu4u@localhost/arababc'
     debug = True
 elif run == 'deploy':
