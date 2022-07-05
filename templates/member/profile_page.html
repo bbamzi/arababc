@@ -1,94 +1,119 @@
-{% extends "base.html"  %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <!-- "{{ url_for('static', filename='styles.css') }}" -->
-<title>{% block title %}{{ member.first_name + member.surname }}{% endblock %}</title>
+<title>
+  {% block title %}{{ member.first_name + member.surname }}{% endblock %}
+</title>
 
 <!-- <img src="static/img/uploads/{{member.profile_picture}}" alt="hihihi"> -->
 
 <div class="container">
-  {% with messages = get_flashed_messages() %}
-         {% if messages %}
-            <ul>
-               {% for message in messages %}
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <ul>
+    {% for message in messages %}
 
-
-                <div class="alert alert-success alert-dismissible fade show col-md-6 " role="alert">
-               <li>{{ message }}</li>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-               {% endfor %}
-            </ul>
-         {% endif %}
-      {% endwith %}
+    <div
+      class="alert alert-success alert-dismissible fade show col-md-6"
+      role="alert"
+    >
+      <li>{{ message }}</li>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
   <div class="">
-
-
-
-<!--<img src="{{ url_for('static', filename='img/uploads/'+profile_pic) }}" alt="hihihi" class="rounded-circle" width="150">&ndash;&gt;-->
+    <!--<img src="{{ url_for('static', filename='img/uploads/'+profile_pic) }}" alt="hihihi" class="rounded-circle" width="150">&ndash;&gt;-->
   </div>
-  <br>
-    <div class="main-body">
+  <br />
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              {% if member.first_name in member.profile_picture %} {% set
+              profile_pics = member.profile_picture %}
+              <img
+                src="{{ url_for('static', filename='img/uploads/'+profile_pic) }}"
+                alt="hihihi"
+                class="rounded-circle"
+                width="150"
+              />
+              {% elif member.gender == 'male' and 'default.png' in
+              member.profile_picture %}
+              <img
+                src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
+              {% elif member.gender == 'female' and 'default.png' in
+              member.profile_picture %}
+              <img
+                src="https://bootdey.com/img/Content/avatar/avatar8.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
+              {% endif %}
 
-
-          <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-center text-center">
-                    {% if member.first_name in member.profile_picture %}
-                    {% set profile_pics = member.profile_picture %}
-<img src="{{ url_for('static', filename='img/uploads/'+profile_pic) }}" alt="hihihi" class="rounded-circle" width="150">
-                    {% elif member.gender == 'male' and 'default.png' in member.profile_picture %}
-                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                    {% elif member.gender == 'female' and 'default.png' in member.profile_picture %}
-                      <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="Admin" class="rounded-circle" width="150">
-                    {% endif %}
-
-
-
-                    <h4>{{ (member.first_name + " " +member.middle_name + " " + member.surname)|title }}</h4>
-                    <div class="mt-3">
-
-                      <p class="text-secondary mb-1 ">{{ member.department }}</p>
-                      {% for position in position %}
-                       <p class="text-muted font-size-sm ">{{ position.position }}</p>
-                      {% endfor %}
-                      <a href="{{url_for('edit', id=member.id)}}"><button class="btn btn-outline-primary">Edit Profile</button></a>
-                    </div>
-                  </div>
-                </div>
+              <h4>
+                {{ (member.first_name + " " +member.middle_name + " " +
+                member.surname)|title }}
+              </h4>
+              <div class="mt-3">
+                <p class="text-secondary mb-1">{{ member.department }}</p>
+                {% for position in position %}
+                <p class="text-muted font-size-sm">{{ position.position }}</p>
+                {% endfor %}
+                <a href="{{url_for('edit', id=member.id)}}"
+                  ><button class="btn btn-outline-primary">
+                    Edit Profile
+                  </button></a
+                >
               </div>
+            </div>
+          </div>
+        </div>
 
-              <div class="card mt-3">
+        <div class="card mt-3">
+          <div class="card-body">
+            {% for position in member.positions %}
+            <h6 class="d-flex align-items-center mb-3">
+              <i class="material-icons text-info mr-2">Department Served</i>{{
+              position.department }}
+            </h6>
 
-                  <div class="card-body">
-                    {% for position in member.positions %}
-                    <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Department Served</i>{{ position.department }}</h6>
+            <div class="card mt-3">
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                >
+                  <!-- <div class=""><h6>Position</h6></div> -->
+                  <h6 class="mb-0">{{ position.position|title }}</h6>
 
-
-                    <div class="card mt-3">
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <!-- <div class=""><h6>Position</h6></div> -->
-                          <h6 class="mb-0">{{ position.position|title }}</h6>
-
-                          <div class="">
-
-
-                          <span class="text-secondary">{{ position.start_date }} to {{ position.end_date }}</span>
-                          </div>
-                        </li>
-                      </ul>
-
-                    </div>
-                    <br>
-                  {% endfor %}
+                  <div class="">
+                    <span class="text-secondary"
+                      >{{ position.start_date }} to {{ position.end_date
+                      }}</span
+                    >
                   </div>
-                </div>
+                </li>
+              </ul>
+            </div>
+            <br />
+            {% endfor %}
+          </div>
+        </div>
 
-              <!-- <div class="card mt-3">
+        <!-- <div class="card mt-3">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
@@ -104,185 +129,168 @@
                   </li>
                 </ul>
               </div> -->
+      </div>
+
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <h4 class="profile_heading">Contact Details</h4>
+
+          <div class="card-body">
+            <div class="row">
+              <hr />
+              <div class="col-sm-3">
+                <h6 class="mb-0">Full Name</h6>
+              </div>
+
+              <div class="col-sm-9 text-secondary">
+                {{ (member.first_name + " " +member.middle_name + " " +
+                member.surname)|title }}
+              </div>
             </div>
-
-            <div class="col-md-8">
-
-              <div class="card mb-3">
-                <h4 class = "profile_heading ">Contact Details</h4>
-
-                <div class="card-body">
-
-                  <div class="row">
-                    <hr>
-                    <div class="col-sm-3">
-
-                      <h6 class="mb-0">Full Name</h6>
-                    </div>
-
-                    <div class="col-sm-9 text-secondary">
-                      {{ (member.first_name + " " +member.middle_name + " " + member.surname)|title }}
-                    </div>
-
-                  </div>
-                  <hr>
-                  {% if 'Female' in member.gender and ('Married' in member.marital_status or 'Widowed in member.marital_status') %}
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Maiden Name</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.maiden_name|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  {% endif %}
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.email|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.phone_number }}
-                    </div>
-                  </div>
-                  <hr>
-                  {% if member.second_phone_number %}
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Mobile</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.second_phone_number }}
-                    </div>
-                  </div>
-                  <hr>
-                  {% endif %}
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Address</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.residential_address|title }}
-                    </div>
-                  </div>
-
-
-                </div>
-
+            <hr />
+            {% if 'Female' in member.gender and ('Married' in
+            member.marital_status or 'Widowed in member.marital_status') %}
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Maiden Name</h6>
               </div>
-
-              <div class="card mb-3">
-                <h4 class = "profile_heading">Profile</h4>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Gender</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.gender|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Marital Status</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.marital_status|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Occupation</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.occupation|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Society</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.society|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">State Of Origin</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.state_of_origin|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Local Government Of Origin</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.state_lga|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Permanent Home Address</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.permanent_address|title }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Baptism</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ member.baptism }}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                  </div>
-                </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.maiden_name|title }}
               </div>
-
-
-
-
-
+            </div>
+            <hr />
+            {% endif %}
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.email|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Phone</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.phone_number }}
+              </div>
+            </div>
+            <hr />
+            {% if member.second_phone_number %}
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Mobile</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.second_phone_number }}
+              </div>
+            </div>
+            <hr />
+            {% endif %}
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Address</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.residential_address|title }}
+              </div>
             </div>
           </div>
-
         </div>
+
+        <div class="card mb-3">
+          <h4 class="profile_heading">Profile</h4>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Gender</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.gender|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Marital Status</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.marital_status|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Occupation</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.occupation|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Society</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.society|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">State Of Origin</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.state_of_origin|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Local Government Of Origin</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.state_lga|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Permanent Home Address</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ member.permanent_address|title }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Baptism</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">{{ member.baptism }}</div>
+            </div>
+            <hr />
+            <div class="row"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- <script src="static/js/scripts.js"></script> -->
+  </div>
+</div>
+<!-- <script src="static/js/scripts.js"></script> -->
 <script type="text/javascript">
-
-$(document).ready(function () {
-
-window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove();
-    });
-}, 3000);
-
-});
-
-
+  $(document).ready(function () {
+    window.setTimeout(function () {
+      $(".alert")
+        .fadeTo(500, 0)
+        .slideUp(500, function () {
+          $(this).remove();
+        });
+    }, 3000);
+  });
 </script>
 
 {% endblock %}
