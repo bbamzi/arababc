@@ -12,13 +12,16 @@
       <h3>Balance = ₦{{ sms_balance }}</h3>
       <p>Approximately {{ (sms_balance/3) | round |int }} units of sms left </p>
       </div>
+
+
     <hr>
-    <div class="row align-items-stretch no-gutters contact-wrap">
+    <div class="row align-items-stretch no-gutters contact-wrap ">
       <div class="col-md-8">
         <div class="form h-100">
-          <h3>Numbers Generated</h3>
+         
 
           <ul>
+            <h3 style="margin: 10px;">Select Recipients:</h3>
             <ul>
             <li>First select the group of Members you would like to send message to</li>
             <li>Click The Generate Button to Render Numbers According To your Filtered Preference</li>
@@ -41,21 +44,129 @@
 
               <div class="col-md-12 form-group mb-3">
                 <input class="btn btn-primary profile-button" type="submit" value="Generate numbers">
-</form>
+              </form>
               </div>
               </div>
               </div>
+              <button id="report_btn" style="font: inherit;
+              border: 1px solid #3e00a1;
+              color: #3e00a1;
+              background: white;
+              border-radius: 3px;
+              cursor: pointer;
+              button:hover"><i class="fa fa-bar-chart" aria-hidden="true"></i> Generate Report</button>
+               <button id="hide_btn" style="
+               display: none;
+               font: inherit;
+               border: 1px solid #3e00a1;
+               color: #3e00a1;
+               background: white;
+               border-radius: 3px;
+               cursor: pointer;
+               button:hover"><i class="fa fa-bar-chart " aria-hidden="true"></i> Hide Reports</button>
+             
+              
+             
+             
+             
+              <div class="report_table" style="display: none;">
+                <h1 class="float-right">Deliver Reports</h1>
+              <div class="table-responsive mt-4 card-body report bg-gradient-light">
+
+                <table class="table table-sm .table-bordered bg-gradient-light " id="event_table">
+                <thead class = "thead-success ">
+                  <tr>
+                      <th class="bg-gradient-primary">Send Date</th>
+                    <th class="bg-gradient-primary">Number</th>
+                    <th class="bg-gradient-primary">Message</th>
+                      <th class="bg-gradient-primary">Price</th>
+                    <th class="bg-gradient-primary">Status</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  {% for report in sms_report %}
+                  <tr>
+              
+                    <th class="table-primary" scope="row">{{ report.send_date }}</th>
+                  <td class="col-lg-3 table-primary">{{ report.mobile }}</td>
+                    <td class="col-lg-2 table-primary">{{ report.message[:15] + '....'}}</td>
+              
+                    <td class="col-lg-2 table-primary">{{ report.price   }}</td>
+                    {% if report.status == 'FAILED' %}
+                    <td class="col-lg-2 table-danger">{{ report.status   }}</td>
+                    {% elif report.status == 'DELIVERED' %}
+                    <td class="col-lg-2 table-success">{{ report.status   }}</td>
+                    {% elif report.status == 'Submitted' %}
+                    <td class="col-lg-2 table-warning">{{ report.status   }}</td>
+                    {% else %}
+                    <td class="col-lg-2 table-primary">{{ report.price   }}</td>
+
+                    {% endif %}
+              
+                      </td>
+                  </tr> 
+                  {% endfor %}
+                </tbody>
+              </table>
+             
+              
+              
+              
+              
               </div>
+              <p>Sms Functionality Powered by <span><a href="http://nigeriabulksms.com/">Nigerian Bulk Sms Services</a></span> </p>
+            </div>
+          </div>
+     
+
+
+           
+            <script type="text/javascript">
+              $('#event_table').DataTable({
+              });
+            $(document).ready(function () {
+            
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove();
+                });
+            }, 1500);
+            
+            });
+
+            const report_btn = document.getElementById('report_btn')
+            const hide_btn = document.getElementById('hide_btn')
+
+            report_btn.addEventListener('click',(e)=> {
+              document.querySelector('.report_table').style.display = 'block'
+              hide_btn.style.display = 'block'
+              report_btn.style.display = 'none'
+            })
+
+            hide_btn.addEventListener('click',(e)=> {
+              document.querySelector('.report_table').style.display = 'none'
+              hide_btn.style.display = 'none'
+              report_btn.style.display = 'block'
+            })
+
+            </script>
+             
+
+               
+              
+              
+              
+              
+           
 
 
 
 
 
 
+          
 
-            <!-- <p>{{ numbers_to_generate }}</p> -->
-
-  <!-- <button type="submit" name="position_button">Generate numbers</button> -->
+ 
 
 {% endblock %}
   <!-- </body>

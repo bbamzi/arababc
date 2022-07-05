@@ -14,11 +14,11 @@ from flask_migrate import Migrate
 from sms.number_filter import NumberGenerate
 from family import familes
 
-sms = Sms()
+
 
 app = Flask(__name__)
 
-run = 'deploy'
+run = 'dev'
 debug = ''
 
 if run == 'dev':
@@ -332,14 +332,13 @@ def home():
 @login_required
 def sms_index():
     num = NumberGenerate()
-    # sms = Sms()
+    sms = Sms()
     numbers_generated = ''
     if request.method == 'POST':
         chosen_group = num.number_getter(request.form['select'])
         len_of_number = 0
         for i in chosen_group:
             try:
-                print(i)
                 numbers_generated += i + ','
                 len_of_number += 1
             except TypeError:
@@ -353,9 +352,14 @@ def sms_index():
 @app.route('/send-text', methods=["GET", "POST"])
 @login_required
 def messaging():
-    # sms = Sms()
+    sms = Sms()
     num = NumberGenerate()
-    return render_template('Bulk_sms/messaging.html', group_list=num.group_list, sms_balance=sms.balance_getter())
+    sms_report= sms.report_getter()
+    # report = sms.report_getter(phone_counter)
+    # number_of_pending = report['status'].count("Submitted")
+    # number_of_delivered = report['status'].count('DELIVERED')
+ 
+    return render_template('Bulk_sms/messaging.html', group_list=num.group_list, sms_balance=sms.balance_getter(), sms_report=sms_report)
 
 
 phone_counter = ''
@@ -364,7 +368,7 @@ phone_counter = ''
 @app.route('/send_sms', methods=["GET", "POST"])
 @login_required
 def send_sms():
-    # sms = Sms()
+    sms = Sms()
     if request.method == 'POST':
         sender_name = request.form['sender_name']
         phone_numbers = request.form['numbers_generated']

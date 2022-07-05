@@ -1,130 +1,177 @@
-{% extends "base.html"  %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <title>{% block title %}Send Sms{% endblock %}</title>
 <div class="container row">
-
-<div class="sms_content">
+  <div class="sms_content">
     <h3>Balance = ₦{{ sms_balance }}</h3>
-    <p>Approximately {{ (sms_balance/3) | round |int }} units of sms left </p>
+    <p>Approximately {{ (sms_balance/3) | round |int }} units of sms left</p>
+  </div>
+  <hr />
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <ul>
+    {% for message in messages %}
+
+    <div
+      class="alert alert-primary alert-dismissible fade show col-md-6"
+      role="alert"
+    >
+      <li>{{ message }}</li>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-  <hr>
-  {% with messages = get_flashed_messages() %}
-           {% if messages %}
-              <ul>
-                 {% for message in messages %}
-
-
-                  <div class="alert alert-primary alert-dismissible fade show col-md-6 " role="alert">
-                 <li>{{ message }}</li>
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-              </div>
-                 {% endfor %}
-              </ul>
-           {% endif %}
-        {% endwith %}
+    {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
   <div class="row align-items-stretch no-gutters contact-wrap">
     <div class="col-md-12">
       <div class="form h-100">
         <h3>Numbers Generated</h3>
+        {% if sms_balance < (3.00 * len_of_numbers) %}
+        <p style="color: red">Not Enough Balance For This Action</p>
+        {% endif %}
 
         <ul>
-        <!-- <li>First select the group of Members you would like to send message to</li> -->
-        <!-- <li>Click The Generate Button to Render Numbers According To your Filtered Preference</li> -->
-        <li>Sending to a total of {{ len_of_numbers }} numbers</li>
-        <li>The cost of each 160 characters is ₦ 3.00 per number </li>
-        <li>This message will cost : </li>
+          <!-- <li>First select the group of Members you would like to send message to</li> -->
+          <!-- <li>Click The Generate Button to Render Numbers According To your Filtered Preference</li> -->
+          <li>Sending to a total of {{ len_of_numbers }} numbers</li>
+          <li>The cost of each 160 characters is ₦ 3.00 per number</li>
+          <li>This message will cost :</li>
           <ul>
-            <li>3.00 x {{ len_of_numbers }} = <i class="material-icons text-info mr-2">₦ {{len_of_numbers * 3 }}. </i>if characters are less than 160</li>
-            <li>2 x (3.00) * {{ len_of_numbers }} = <i class="material-icons text-info mr-2">₦ {{len_of_numbers * (3 * 2) }}. </i>if characters are more than 160</li>
+            <li>
+              3.00 x {{ len_of_numbers }} =
+              <i class="material-icons text-info mr-2"
+                >₦ {{len_of_numbers * 3 }}. </i
+              >if characters are less than 160
+            </li>
+            <li>
+              2 x (3.00) * {{ len_of_numbers }} =
+              <i class="material-icons text-info mr-2"
+                >₦ {{len_of_numbers * (3 * 2) }}. </i
+              >if characters are more than 160
+            </li>
           </ul>
-        <li>The message box takes only 320 characters </li>
-          <li>There is a counter below the messaging box </li>
-
-
-
-
-
-
+          <li>The message box takes only 320 characters</li>
+          <li>There is a counter below the messaging box</li>
         </ul>
 
-<section class="send_msg">
-
-
-<form class="" action="{{url_for('send_sms')}}" method="POST">
-
-
-    <div class="row">
-      <div class="col-md-6 form-group mb-3">
-        <label for="" class="col-form-label">Sender (<i>e.g Araba BC</i>)*</label>
-        <input type="text" class="form-control" name="sender_name" id="sender_name" placeholder="Sender" >
-        <p>This will appear as the sender on Recipient's Phone</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 form-group mb-3">
-        <!-- {% if chosen_groups != 'Custom Numbers' %}
+        <section class="send_msg">
+          <form class="" action="{{url_for('send_sms')}}" method="POST">
+            <div class="row">
+              <div class="col-md-6 form-group mb-3">
+                <label for="" class="col-form-label"
+                  >Sender (<i>e.g Araba BC</i>)*</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="sender_name"
+                  id="sender_name"
+                  placeholder="Sender"
+                />
+                <p>This will appear as the sender on Recipient's Phone</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group mb-3">
+                <!-- {% if chosen_groups != 'Custom Numbers' %}
         <label for="message" class="col-form-label">Recipients Name for [ {{ chosen_groups }} ] *</label>
         <textarea   class="form-control" name="numbers_generated" id="numbers_generated" cols="30" rows="6">{{ numbers_generated }}</textarea>
         {% endif %} -->
-        <input type="hidden" id="phone_number" name="phone_number" value="{{ numbers_generated }}">
-        <label for="message" class="col-form-label">Numbers for [ {{ chosen_groups }} ] *</label>
-        <textarea  oninput="this.value = this.value.replace(/[^0-9.,+]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" class="form-control" name="numbers_generated" id="numbers_generated" cols="30" rows="6">{{ numbers_generated }}</textarea>
-        <input type="hidden" id="phone_number" name="phone_number" value="{{ numbers_generated }}">
-<br>
-        <div class="">
-<ul>
-  <li>Type in your message below (320 characters max)...</li>
-  <li>Press send and your message will be sent to the selected numbers. </li>
-</ul>
-        </div>
+                <input
+                  type="hidden"
+                  id="phone_number"
+                  name="phone_number"
+                  value="{{ numbers_generated }}"
+                />
+                <label for="message" class="col-form-label"
+                  >Numbers for [ {{ chosen_groups }} ] *</label
+                >
+                <textarea
+                  oninput="this.value = this.value.replace(/[^0-9.,+]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                  class="form-control"
+                  name="numbers_generated"
+                  id="numbers_generated"
+                  cols="30"
+                  rows="6"
+                >
+{{ numbers_generated }}</textarea
+                >
+                <input
+                  type="hidden"
+                  id="phone_number"
+                  name="phone_number"
+                  value="{{ numbers_generated }}"
+                />
+                <br />
+                <div class="">
+                  <ul>
+                    <li>Type in your message below (320 characters max)...</li>
+                    <li>
+                      Press send and your message will be sent to the selected
+                      numbers.
+                    </li>
+                  </ul>
+                </div>
 
-        <label for="message" class="col-form-label">Message *</label>
+                <label for="message" class="col-form-label">Message *</label>
 
-        <textarea placeholder="Enter the message input here.. (limited to 320 characters, 160 per sms)" rows="4" class="form-control" name="message" id="my-input" maxlength="320"></textarea><span id='remainingC'></span>
+                <textarea
+                  placeholder="Enter the message input here.. (limited to 320 characters, 160 per sms)"
+                  rows="4"
+                  class="form-control"
+                  name="message"
+                  id="my-input"
+                  maxlength="320"
+                ></textarea
+                ><span id="remainingC"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <input
+                  type="submit"
+                  value="Send Message"
+                  class="btn btn-primary rounded-0 py-2 px-4"
+                />
+                <span class="submitting"></span>
+              </div>
+            </div>
+          </form>
+        </section>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3 form-group">
-        <input type="submit" value="Send Message" class="btn btn-primary rounded-0 py-2 px-4">
-        <span class="submitting"></span>
-      </div>
-    </div>
-    </form>
-    </section>
   </div>
-  </div>
-  </div>
-  </div>
+</div>
 <script type="text/javascript">
   $(document).ready(function () {
-
-  window.setTimeout(function() {
-      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+    window.setTimeout(function () {
+      $(".alert")
+        .fadeTo(500, 0)
+        .slideUp(500, function () {
           $(this).remove();
-      });
-  }, 5000);
-
+        });
+    }, 5000);
   });
 
+  $(document).ready(function () {
+    var len = 0;
+    var maxchar = 320;
 
-  $(document).ready(function() {
-  var len = 0;
-  var maxchar = 320;
-
-  $( '#my-input' ).keyup(function(){
-    len = this.value.length
-    if(len > maxchar){
+    $("#my-input").keyup(function () {
+      len = this.value.length;
+      if (len > maxchar) {
         return false;
-    }
-    else if (len > 0) {
-        $( "#remainingC" ).html( "Remaining characters: " +( maxchar - len ) );
-    }
-    else {
-        $( "#remainingC" ).html( "Remaining characters: " +( maxchar ) );
-    }
-  })
-});
+      } else if (len > 0) {
+        $("#remainingC").html("Remaining characters: " + (maxchar - len));
+      } else {
+        $("#remainingC").html("Remaining characters: " + maxchar);
+      }
+    });
+  });
 </script>
-  {% endblock %}
+{% endblock %}
