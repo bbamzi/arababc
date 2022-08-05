@@ -526,7 +526,7 @@ def member_list():
         flash('Member Successfully Added')
         return redirect(url_for('member_list'))
 
-    return render_template('member/member_list.html', state_list=states,gmap_script = gmap_script,
+    return render_template('member/member_list.html', state_list=states,
                            gender_list=gender, society_list=society, departments_list=departments,
                            member=Members.query.all())
 
