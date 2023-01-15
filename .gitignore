@@ -1,1 +1,5 @@
 .env
+venv
+__pycache__
+sms/__pycache__/__init__.cpython-310.pyc
+sms/__pycache__/number_filter.cpython-310.pyc

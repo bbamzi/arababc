@@ -34,7 +34,7 @@ def month(new):
 class NumberGenerate:
 
     def __init__(self):
-        self.engine = 'postgresql://dyfeozsmihybfu:4d701100fe07e67a2f71e3b3d6bbc3af5793e874cdda613f583c4736fdbb005e@ec2-54-163-158-194.compute-1.amazonaws.com:5432/d1gjlnpa8bvalr'
+        self.engine = 'postgresql://postgres:1855@localhost/flask   '
         self.df = pd.read_sql('select * from Members', con=self.engine)
         # self.df = pd.read_csv('/Users/akinbodebams/PycharmProjects/arabs/new.csv')
         self.drop_duplicate()

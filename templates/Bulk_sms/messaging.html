@@ -73,41 +73,7 @@
                 <h1 class="float-right">Deliver Reports</h1>
               <div class="table-responsive mt-4 card-body report bg-gradient-light">
 
-                <table class="table table-sm .table-bordered bg-gradient-light " id="event_table">
-                <thead class = "thead-success ">
-                  <tr>
-                      <th class="bg-gradient-primary">Send Date</th>
-                    <th class="bg-gradient-primary">Number</th>
-                    <th class="bg-gradient-primary">Message</th>
-                      <th class="bg-gradient-primary">Price</th>
-                    <th class="bg-gradient-primary">Status</th>
-                  </tr>
-                </thead>
-                <tbody >
-                  {% for report in sms_report %}
-                  <tr>
-              
-                    <th class="table-primary" scope="row">{{ report.send_date }}</th>
-                  <td class="col-lg-3 table-primary">{{ report.mobile }}</td>
-                    <td class="col-lg-2 table-primary">{{ report.message[:15] + '....'}}</td>
-              
-                    <td class="col-lg-2 table-primary">{{ report.price   }}</td>
-                    {% if report.status == 'FAILED' %}
-                    <td class="col-lg-2 table-danger">{{ report.status   }}</td>
-                    {% elif report.status == 'DELIVERED' %}
-                    <td class="col-lg-2 table-success">{{ report.status   }}</td>
-                    {% elif report.status == 'Submitted' %}
-                    <td class="col-lg-2 table-warning">{{ report.status   }}</td>
-                    {% else %}
-                    <td class="col-lg-2 table-primary">{{ report.price   }}</td>
-
-                    {% endif %}
-              
-                      </td>
-                  </tr> 
-                  {% endfor %}
-                </tbody>
-              </table>
+               
              
               
               

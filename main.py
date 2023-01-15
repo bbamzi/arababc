@@ -18,21 +18,24 @@ from family import familes
 
 app = Flask(__name__)
 
-run = 'deploy'
-debug = ''
+run = 'dev'
+# debug = ''
 
 if run == 'dev':
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:icui4cu4u@localhost/arababc'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:1855@localhost/flask"
     debug = True
-elif run == 'deploy':
-    uri = os.environ.get('DATABASE_URL')
-    if uri and uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
-        app.config['SQLALCHEMY_DATABASE_URI'] =  uri
-        debug = False
+# elif run == 'deploy':
+#     uri = os.environ.get('DATABASE_URL')
+#     if uri and uri.startswith("postgres://"):
+#         uri = uri.replace("postgres://", "postgresql://", 1)
+#         app.config['SQLALCHEMY_DATABASE_URI'] =  uri
+#         debug = False
 
-app.config['SECRET KEY'] = os.environ.get('SECRET_KEY')
-app.secret_key = os.environ.get('APP_SECRET_KEY')
+
+
+
+app.config['SECRET KEY'] ='APP_SECRET_KEYdffsdf'     #os.environ.get('SECRET_KEY')
+app.secret_key ='APP_SECRET_KEYdffsdf' #os.environ.get('APP_SECRET_KEY')
 app.config['ALLOWED_IMAGE_EXTENSIONS'] = ['PNG', 'JPG', 'JPEG', 'jpeg', 'png', 'jpg']
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 # app.config = ['IMAGE_UPLOADS'] = 'static/uploads'
@@ -55,8 +58,8 @@ def load_user(member_id):
 class Members(db.Model, UserMixin):
     __tablename__ = 'members'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.String(100))
-    middle_name = db.Column(db.String(100))
+    fe = db.Column(db.String(100))
+    middle_name = dbirst_nam.Column(db.String(100))
     surname = db.Column(db.String(100))
     maiden_name = db.Column(db.String(100))
     gender = db.Column(db.String(100))
@@ -97,7 +100,7 @@ class Members(db.Model, UserMixin):
 
 class Position(db.Model):
     __tablename__ = 'positions'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True , autoincrement=True)
     position = db.Column(db.String(100))
     department = db.Column(db.String(100))
     start_date = db.Column(db.String(100))
@@ -107,7 +110,7 @@ class Position(db.Model):
 
 class Abc_Families(db.Model):
     __tablename__ = 'abc_families'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     family_name = db.Column(db.String(100))
     phone_number = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -123,7 +126,7 @@ class Abc_Families(db.Model):
 
 class Visitations(db.Model):
     __tablename__ = 'visitations'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(120))
     description = db.Column(db.String(500))
     day_visited = db.Column(db.String(100))
@@ -138,7 +141,7 @@ class Visitations(db.Model):
 #
 class Calendar(db.Model):
     __tablename__ = 'calendar'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(120))
     description = db.Column(db.String(500))
     start_date = db.Column(db.Date)
@@ -148,7 +151,7 @@ class Calendar(db.Model):
 
 class Joint_events(db.Model):
     __tablename__ = 'joint_events'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     Title = db.Column(db.String(120))
     Description = db.Column(db.String(500))
     Date = db.Column(db.Date)
@@ -283,7 +286,7 @@ def date_formatter(date):
 
 
 @app.route('/')
-@login_required
+# #@login_required
 def home():
     
     # map
@@ -296,7 +299,7 @@ def home():
     longitude = [float(i.coordinates.split(',')[1][:-1].strip(' ')) for i in family]
 
     items = [list(x) for x in zip(Family_name, latitiude, longitude)]
-    setview = [items[0][1], items[-1][2]]
+    # setview = [items[0][1], items[-1][2]]
 
     # calendar
     event = Joint_events.query.filter(Joint_events.Date >= datetime.date.today())
@@ -329,7 +332,7 @@ def home():
 
 
 @app.route('/sms', methods=["GET", "POST"])
-@login_required
+# #@login_required
 def sms_index():
     num = NumberGenerate()
     sms = Sms()
@@ -350,7 +353,7 @@ def sms_index():
 
 
 @app.route('/send-text', methods=["GET", "POST"])
-@login_required
+# #@login_required
 def messaging():
     sms = Sms()
     num = NumberGenerate()
@@ -359,14 +362,14 @@ def messaging():
     # number_of_pending = report['status'].count("Submitted")
     # number_of_delivered = report['status'].count('DELIVERED')
  
-    return render_template('Bulk_sms/messaging.html', group_list=num.group_list, sms_balance=sms.balance_getter(), sms_report=sms_report)
+    return render_template('Bulk_sms/messaging.html', group_list=num.group_list, sms_balance=2323   , sms_report=sms_report)
 
 
 phone_counter = ''
 
 
 @app.route('/send_sms', methods=["GET", "POST"])
-@login_required
+#@login_required
 def send_sms():
     sms = Sms()
     if request.method == 'POST':
@@ -392,7 +395,7 @@ def sms_report():
 
 
 @app.route('/datapage')
-@login_required
+#@login_required
 def datapage():
     member = Members.query.all()
     columns = ['id', 'Full Name', 'Phone Number', 'Birthday Month', 'Birthday day', 'Society', 'Age Group', ]
@@ -400,7 +403,7 @@ def datapage():
     return render_template('member/datatable.html', columns=columns, member=member)
 
 @app.route('/member_map')
-@login_required
+#@login_required
 def member_map():
     member = Members.query.all()
     Family_name = [i.first_name for i in member]
@@ -412,7 +415,7 @@ def member_map():
     return render_template('member/members_map.html')
 
 @app.route('/welfare/families')
-@login_required
+#@login_required
 def families():
     members = db.session.query(Abc_Families, Visitations).outerjoin(Visitations,
                                                                     Abc_Families.id == Visitations.family_id).all()
@@ -438,7 +441,7 @@ def login():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def logout():
     logout_user()
     flash('you have been logged out')
@@ -448,7 +451,7 @@ def logout():
 # ################################################CLEAR##################################################################
 
 @app.route('/member_list', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def member_list():
     fam = familes.Families()
     
@@ -540,7 +543,7 @@ def new_member():
 
 @app.route('/profile_picture', methods=['GET', 'POST'])
 @app.route('/member/edit/<int:id>', methods=["GET", "POST"])
-@login_required
+#@login_required
 def edit(id):
     member_id = Members.query.get(id)
     position_id = Position.query.get(id)
@@ -647,7 +650,7 @@ def edit(id):
 
 
 @app.route('/member/<int:id>/delete/')
-@login_required
+#@login_required
 def delete(id):
     member_id = Members.query.get(id)
     db.session.delete(member_id)
@@ -760,7 +763,7 @@ def family_visitation_edit(id):
 
 
 @app.route('/welfare/<int:id>/delete/')
-@login_required
+#@login_required
 def delete_visitations(id):
     visitation = Visitations.query.get(id)
     db.session.delete(visitation)
@@ -770,7 +773,7 @@ def delete_visitations(id):
 
 
 @app.route('/welfare/active_visitations')
-@login_required
+#@login_required
 def active_visitations():
     # family = Abc_Families.query.all()
     members = db.session.query(Abc_Families, Visitations) \
@@ -781,7 +784,7 @@ def active_visitations():
 
 
 @app.route('/admin-settings', methods=["GET", "POST"])
-@login_required
+#@login_required
 def admin_settings():
     member_id = Members.query.get(current_user.id)
     if request.method == 'POST':
@@ -804,7 +807,7 @@ def admin_settings():
 
 
 @app.route('/set-admin', methods=["GET", "POST"])
-@login_required
+#@login_required
 def set_admin():
     if request.method == 'POST':
         member_id = Members.query.get(request.form['member_id'])
@@ -824,7 +827,7 @@ def set_admin():
 
 
 @app.route('/username', methods=["GET", "POST"])
-@login_required
+#@login_required
 def username():
     member_id = Members.query.get(current_user.id)
     if request.method == 'POST':
@@ -835,7 +838,7 @@ def username():
 
 
 @app.route('/calendar')
-@login_required
+#@login_required
 def calendar():
     # event=db.session.query(Joint_events, Calendar).outerjoin(Joint_events,
     #                                                       Calendar.id == Joint_events.calendar_id).all()
@@ -852,7 +855,7 @@ def calendar():
 
 
 @app.route('/add_event', methods=["GET", "POST"])
-@login_required
+#@login_required
 def add_event():
     if request.method == 'POST':
         new_calendar = Calendar(title=request.form['title'],
@@ -879,7 +882,7 @@ def add_event():
 
 
 @app.route('/event_page/<int:id>')
-@login_required
+#@login_required
 def event_page(id):
     # events = Calendar.query.all().first()
     events = Joint_events.query.get(id)
@@ -888,7 +891,7 @@ def event_page(id):
 
 
 @app.route('/event_table')
-@login_required
+#@login_required
 def event_table():
     events = Joint_events.query.all()
 
@@ -899,7 +902,7 @@ def event_table():
 
 
 @app.route('/maps')
-@login_required
+#@login_required
 def map():
     member = Abc_Families.query.all()
     # visitation = Visitations.query.filter_by(family_id=id).first()
@@ -915,7 +918,7 @@ def map():
 
 
 @app.route('/update_event/<int:id>', methods=["GET", "POST"])
-@login_required
+#@login_required
 def update_event(id):
     events = Calendar.query.get(id)
     joint = Joint_events.query.get(id)
@@ -937,7 +940,7 @@ def update_event(id):
 
 
 @app.route('/events/<int:id>/delete/')
-@login_required
+#@login_required
 def delete_event(id):
     events = Calendar.query.get(id)
     db.session.delete(events)
@@ -948,4 +951,4 @@ def delete_event(id):
 
 if __name__ == '__main__':
     # db.create_all()
-    app.run(debug=True)
+    app.run(debug=True,port=5050)
